@@ -1,2 +1,2 @@
-# PSDSCInfraBlueprints
-This repository contains pre-validated and pre-configured PowerShell Desired State Configuration (PSDSC) scripts built as infrastructure blueprints.
+# Infrastructure Blueprints
+This repository contains pre-validated and pre-configured DSC configuration scripts and Azure Resource Manager templates built as infrastructure blueprints.
