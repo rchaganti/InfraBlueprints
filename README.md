@@ -1,4 +1,4 @@
-# Infrastructure Blueprints
+x# Infrastructure Blueprints
 Infrastructure Blueprints are packages that contain the node configuration and the Pester tests that validate desired state after the configuration is applied and also perform operations validation on the node.
 
 The following folder structure shows how these blueprints are packaged.
@@ -12,5 +12,7 @@ The following folder structure shows how these blueprints are packaged.
 	- **Comprehensive**: A set of tests that perform a comprehensive operations validation of the infrastructure at the desired state. Comprehensive 
 	- For ease of identification, the test script names include *Simple* or *Comprehensive* within the file name.
 
-##TO-DO
-- Add support for remotely running the integration and operations tests
+##TODO
+- Integrate with Microsoft's Operations Validation Framework
+- Add support for remotely running the integration and operations tests.
+- Add support for solution stack operations validation.
