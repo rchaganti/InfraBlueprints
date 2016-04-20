@@ -11,3 +11,6 @@ The following folder structure shows how these blueprints are packaged.
 	- **Simple**: A set of tests that validate the functionality of infrastructure at the desired state.
 	- **Comprehensive**: A set of tests that perform a comprehensive operations validation of the infrastructure at the desired state. Comprehensive 
 	- For ease of identification, the test script names include *Simple* or *Comprehensive* within the file name.
+
+##TO-DO
+- Add support for remotely running the integration and operations tests
