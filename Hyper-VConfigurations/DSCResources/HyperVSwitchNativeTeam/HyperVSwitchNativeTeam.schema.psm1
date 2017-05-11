@@ -1,19 +1,25 @@
-﻿Configuration HyperVSwitchEmbeddedTeam
-{
+﻿Configuration HyperVSwitchNativeTeam {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory)]
-        [String] $SwitchName,
+        [Parameter()]
+        [String] $TeamName = 'ConvergedTeam',
 
         [Parameter(Mandatory)]
-        [String[]] $NetAdapterName,
+        [String[]] $TeamMembers,
 
         [Parameter()]
-        [ValidateSet('Dynamic','HyperVPort')]
+        [ValidateSet("Dynamic", "HyperVPort", "IPAddresses", "MacAddresses", "TransportPorts")]
         [String] $LoadbalancingAlgorithm = 'Dynamic',
 
         [Parameter()]
+        [ValidateSet("SwitchIndependent", "LACP", "Static")]
         [String] $TeamingMode = 'SwitchIndependent',
+
+        [Parameter()]
+        [String] $SwitchName = 'ConvergedSwitch',
+
+        [Parameter()]
+        [String] $ManagementAdapterName = 'Management',
 
         [Parameter()]
         [String] $ClusterAdapterName = 'Cluster',
@@ -49,7 +55,7 @@
         [String] $ManagementIPAddress,
 
         [Parameter(Mandatory)]
-        [Int] $ManagementSubnet,
+        [Int] $ManagementPrefixLength,
 
         [Parameter(Mandatory)]
         [String] $ManagementGateway,
@@ -61,61 +67,92 @@
         [String] $ClusterIPAddress,
 
         [Parameter(Mandatory)]
-        [Int] $ClusterSubnet,
+        [Int] $ClusterPrefixLength,
 
         [Parameter(Mandatory)]
         [String] $LiveMigrationIPAddress,
 
         [Parameter(Mandatory)]
-        [Int] $LiveMigrationSubnet
+        [Int] $LiveMigrationPrefixLength
     )
 
-    Import-DscResource -Name cVMSwitch, cVMNetworkAdapter, cVMNetworkAdapterVlan, cVMNetworkAdapterSettings -ModuleName cHyper-V -ModuleVersion 3.0.0.0
-    Import-DscResource -Name xIPAddress, xDNSServerAddress, xDefaultGatewayAddress -ModuleName xNetworking -ModuleVersion 2.12.0.0
+    Import-DscResource -ModuleName cHyper-V -Name cVMSwitch, cVMNetworkAdapterVlan, cVMNetworkAdapter, cVMNetworkAdapterSettings -ModuleVersion 3.0.0.0
+    Import-DscResource -ModuleName xNetworking -Name xNetworkTeam, xIPAddress, xDefaultGatewayAddress, xDNSServerAddress -ModuleVersion 3.2.0.0
+    Import-DscResource -ModuleName PSDesiredStateConfiguration
+
+    WindowsFeature HyperV {
+        Name = 'Hyper-V'
+        Ensure = 'Present'
+        IncludeAllSubFeature = $true
+    }
+
+    WindowsFeature HyperVMgmt {
+        Name = 'RSAT-Hyper-V-Tools'
+        Ensure = 'Present'
+        IncludeAllSubFeature = $true
+    }
+    
+    xNetworkTeam $TeamName {
+        Name = $TeamName
+        TeamMembers = $TeamMembers
+        LoadBalancingAlgorithm = $LoadbalancingAlgorithm
+        TeamingMode = $TeamingMode
+        Ensure = 'Present'
+    }
 
     cVMSwitch $SwitchName
     {
         Name = $SwitchName
+        NetAdapterName = $TeamName
         Type = 'External'
-        NetAdapterName = $NetAdapterName
-        TeamingMode = $TeamingMode
-        LoadBalancingAlgorithm = $LoadbalancingAlgorithm
-        MinimumBandwidthMode = 'Weight'
+        AllowManagementOS = $false
         Ensure = 'Present'
+        MinimumBandwidthMode = 'Weight'
+        DependsOn = '[WindowsFeature]HyperV',"[xNetworkTeam]$TeamName"
     }
+
+    cVMNetworkAdapter $ManagementAdapterName
+    {
+        Id = "${SwitchName}-Management"
+        Name = $ManagementAdapterName
+        SwitchName = $SwitchName
+        VMName = 'ManagementOS'
+        Ensure = 'Present'
+        DependsOn = "[cVMSwitch]$SwitchName"
+    }    
 
     cVMNetworkAdapterVlan ManagementAdapterVlan
     {
         Id = "${SwitchName}-Management"
-        Name = $SwitchName
+        Name = $ManagementAdapterName
         AdapterMode = 'Access'
         VlanId = $ManagementVlanId
         VMName = 'ManagementOS'
-        DependsOn = "[cVMSwitch]$SwitchName"
+        DependsOn = "[cVMNetworkAdapter]$ManagementAdapterName"
     }
 
     cVMNetworkAdapterSettings ManagementAdapterSettings
     {
         Id = "${SwitchName}-Management"
-        Name = $SwitchName
+        Name = $ManagementAdapterName
         SwitchName = $SwitchName
         VMName = 'ManagementOS'
         MinimumBandwidthWeight = $ManagementMinimumBandwidthWeight
-        DependsOn = "[cVMSwitch]$SwitchName"
+        DependsOn = "[cVMNetworkAdapter]$ManagementAdapterName"
     }
 
     xIPAddress ManagementAdapterIPAddress
     {
-        InterfaceAlias = "vEthernet ($SwitchName)"
+        InterfaceAlias = "vEthernet ($ManagementAdapterName)"
         IPAddress = $ManagementIPAddress
-        SubnetMask = $ManagementSubnet
+        PrefixLength = $ManagementPrefixLength
         AddressFamily = 'IPv4'
         DependsOn = '[cVMNetworkAdapterVlan]ManagementAdapterVlan'
     }
 
     xDefaultGatewayAddress ManagementAdapterGateway
     {
-        InterfaceAlias = "vEthernet ($SwitchName)"
+        InterfaceAlias = "vEthernet ($ManagementAdapterName)"
         AddressFamily = 'IPv4'
         Address = $ManagementGateway
         DependsOn = '[xIPAddress]ManagementAdapterIPAddress'
@@ -123,10 +160,10 @@
 
     xDNSServerAddress ManagementDns
     {
-        InterfaceAlias = "vEthernet ($SwitchName)"
+        InterfaceAlias = "vEthernet ($ManagementAdapterName)"
         AddressFamily = 'IPv4'
         Address = $ManagementDns
-        DependsOn = '[xDefaultGatewayAddress]ManagementAdapterGateway'
+        DependsOn = '[xIPAddress]ManagementAdapterIPAddress'
     }
 
     cVMNetworkAdapter $ClusterAdapterName
@@ -163,7 +200,7 @@
     {
         InterfaceAlias = "vEthernet ($ClusterAdapterName)"
         IPAddress = $ClusterIPAddress
-        SubnetMask = $ClusterSubnet
+        PrefixLength = $ClusterPrefixLength
         AddressFamily = 'IPv4'
         DependsOn = '[cVMNetworkAdapterVlan]ClusterAdapterVlan'
     }
@@ -202,7 +239,7 @@
     {
         InterfaceAlias = "vEthernet ($LiveMigrationAdapterName)"
         IPAddress = $LiveMigrationIPAddress
-        SubnetMask = $LiveMigrationSubnet
+        PrefixLength = $LiveMigrationPrefixLength
         AddressFamily = 'IPv4'
         DependsOn = '[cVMNetworkAdapterVlan]LiveMigrationAdapterVlan'
     }
