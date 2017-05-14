@@ -2,8 +2,13 @@
     AllNodes = @(
         @{
             NodeName = "*"
-            SwitchName = "ConvergedSwitch"
+            SwitchName = "S2DSwitch"
             NetAdapterName = @('SLOT 3','SLOT 3 2')
+            ManagementAdapterName = 'Management'
+            SMB1AdapterName = 'Storage1'
+            SMB2AdapterName = 'Storage2'
+            TeamingMode = 'SwitchIndependent'
+            LoadbalancingAlgorithm = 'Dynamic'
             ManagementVlanId = 102
             SMB1VlanId = 103
             SMB2VlanId = 104

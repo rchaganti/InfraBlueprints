@@ -4,6 +4,11 @@
             NodeName = '*'
             SwitchName = 'ConvergedSwitch'
             NetAdapterName = @('SLOT 3','SLOT 3 2')
+            ManagementAdapterName = 'Management'
+            ClusterAdapterName = 'Cluster'
+            LiveMigrationAdapterName = 'LiveMigration'
+            TeamingMode = 'SwitchIndependent'
+            LoadbalancingAlgorithm = 'Dynamic'
             ManagementVlanId = 102
             ClusterVlanId = 103
             LiveMigrationVlanId = 104

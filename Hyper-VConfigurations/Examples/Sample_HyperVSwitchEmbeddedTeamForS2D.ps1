@@ -9,6 +9,9 @@
         {
             SwitchName = $Node.SwitchName
             NetAdapterName = $Node.NetAdapterName
+            ManagementAdapterName = $Node.ManagementAdapterName
+            SMB1AdapterName = $Node.SMB1AdapterName
+            SMB2AdapterName = $Node.SMB2AdapterName
             ManagementVlanId = $Node.ManagementVlanId
             SMB1VlanId = $Node.SMB1VlanId
             SMB2VlanId = $Node.SMB2VlanId

@@ -8,10 +8,14 @@
         HyperVSwitchNativeTeam HyperVConverged
         {
             TeamName = $Node.TeamName
+            SwitchName = $Node.SwitchName
             TeamMembers = $Node.TeamMembers
             ManagementVlanId = $Node.ManagementVlanId
             LiveMigrationVlanId = $Node.LiveMigrationVlanId
             ClusterVlanId = $Node.ClusterVlanId
+            ManagementAdapterName = $Node.ManagementAdapterName
+            ClusterAdapterName = $Node.ClusterAdapterName
+            LiveMigrationAdapterName = $Node.LiveMigrationAdapterName
             ManagementIPAddress = $Node.ManagementIPAddress
             ManagementPrefixLength = $Node.ManagementPrefixLength
             ManagementGateway = $Node.ManagementGateway

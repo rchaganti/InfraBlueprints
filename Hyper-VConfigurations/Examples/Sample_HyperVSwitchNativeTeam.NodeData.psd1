@@ -5,6 +5,9 @@
             TeamName = 'ConvergedTeam'
             SwitchName = 'ConvergedSwitch'
             TeamMembers = @('SLOT 3','SLOT 3 2')
+            ManagementAdapterName = 'Management'
+            ClusterAdapterName = 'Cluster'
+            LiveMigrationAdapterName = 'LiveMigration'
             ManagementVlanId = 102
             ClusterVlanId = 103
             LiveMigrationVlanId = 104
