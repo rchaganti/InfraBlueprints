@@ -23,6 +23,14 @@ The following folder structure shows how these composite modules are packaged.
 	- **Comprehensive**: A set of tests that perform a comprehensive operations validation of the infrastructure at the desired state. Comprehensive 
 	- For ease of identification, the test script names include *Simple* or *Comprehensive* within the file name.
 
+The Operations Validation Framework can be used to retrieve the list of tests in this module and invoke the relevant ones. 
+
+![](http://i.imgur.com/e4BJvn9.png)
+
+Once you know the composite resource that is applied on the system, you can invoke either simple or comprehensive tests using the *Invoke-OperationValidation* cmdlet.
+
+![](http://i.imgur.com/5EOlsum.png)
+
 - *Examples* folder contains a sample configuration data foreach composite configuration and also a configuration document that demonstrates how to use the composite resource.
 
 - *CompositeModuleName*.psd1 is the module manifest for the composite configuration module.
