@@ -89,3 +89,5 @@ As you can see in the above *Install-Module* cmdlet output, the required modules
 | [Hyper-VConfigurations](https://www.powershellgallery.com/packages/Hyper-VConfigurations) | HyperVSwitchEmbeddedTeam |
 |  | HyperVSwitchEmbeddedTeamForS2D |
 |  | HyperVSwitchNativeTeam |
+
+You can contribute to this repository by adding your own composite resource modules. If you have something to share, just submit a pull request and we will review the resources and update the repository with your resource modules.
