@@ -19,12 +19,6 @@ $configurationDataPSD1 = "${examplePath}\Sample_${baseName}.NodeData.psd1"
 $configurationData = Get-ConfigurationDataAsObject -ConfigurationData $configurationDataPSD1
 
 Describe 'Predeploy tests for Hyper-V Deployment with Switch Embedded Teaming and related network Configuration' {
-    Context 'Hyper-V related tests' {
-        It 'Hyper-V feature is not installed' {
-            (Get-WindowsFeature -Name Hyper-V).Installed | Should Be $false
-        }
-    }
-
     Context 'Network adapters should exist' {
         Foreach ($adapter in $configurationData.AllNodes.NetAdapterName)
         {
