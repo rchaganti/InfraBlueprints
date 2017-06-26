@@ -21,7 +21,7 @@ Infrastructure Blueprints are essentially composite resource packages that conta
 This repository contains multiple composite configuration modules. Each module contains multiple composite resources with ready to use examples and tests that validate the configuration.
  
 The following folder structure shows how these composite modules are packaged.
-![](http://i.imgur.com/4QZnVg5.png)
+![](http://i.imgur.com/Qt6lokc.png)
 
 - *Diagnostics* folder contains the Simple and Comprehensive tests for performing operations validation.
 	- **Simple**: A set of tests that validate the functionality of infrastructure at the desired state.
