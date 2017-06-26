@@ -17,6 +17,7 @@ $configurationDataPSD1 = "${examplePath}\Sample_${baseName}.NodeData.psd1"
 #Replace till here
 
 $configurationData = Get-ConfigurationDataAsObject -ConfigurationData $configurationDataPSD1
+
 Describe 'Simple Operations tests for Hyper-V Deployment with Switch Embedded Teaming and related network Configuration' {
     Context 'Hyper-V module related tests' {
         It 'Hyper-V Module is available' {
@@ -28,34 +29,19 @@ Describe 'Simple Operations tests for Hyper-V Deployment with Switch Embedded Te
         }
     }
 
-    Context 'Network Team tests' {
-        $team = Get-NetLbfoTeam -Name $configurationData.AllNodes.TeamName -ErrorAction SilentlyContinue
-        It 'Network team should exist' {
-            $team | Should not BeNullOrEmpty
-        }
-
-        It 'Load balancing algorithm should match' {
-            $team.LoadBalancingAlgorithm | Should be $configurationData.AllNodes.LoadBalancingAlgorithm
-        }
-
-        It 'Teaming mode should match' {
-            $team.TeamingMode | Should Be $configurationData.AllNodes.TeamingMode
-        }
-    }
-
     Context 'Hyper-V Host networking tests' {
         $vmSwitch = Get-VMSwitch -Name $configurationData.AllNodes.SwitchName -ErrorAction SilentlyContinue
         It 'A VM Switch should exist' {            
             $vmSwitch | Should not BeNullOrEmpty
         }
 
-        It 'VM Switch Type should be external' {
-            $vmSwitch.SwitchType | Should Be 'External'
-        }
-
         It 'Only one VM switch should exist' {
             $vmSwitch.Count | Should be 1
-        }      
+        }
+
+        It 'VM switch should be a SET' {
+            $vmSwitch.EmbeddedTeamingEnabled | Should be $true
+        }        
 
         It 'Bandwidth Reservation Mode should be Weight' {
             $vmSwitch.BandwidthReservationMode | Should be 'Weight'
@@ -71,30 +57,18 @@ Describe 'Simple Operations tests for Hyper-V Deployment with Switch Embedded Te
 
         It 'Live Migration Network Adapter exists' {
             { Get-VMNetworkAdapter -ManagementOS -Name $configurationData.AllNodes.LiveMigrationAdapterName } | Should Not Throw
-        }
-        
-        It 'Management Bandwidth weight should match configuration' {
-            (Get-VMNetworkAdapter -ManagementOS -Name $configurationData.AllNodes.ManagementAdapterName).BandwidthSetting.MinimumBandwidthWeight | Should Be $ConfigurationData.AllNodes.ManagementMinimumBandwidthWeight
-        }
-
-        It 'Cluster Bandwidth weight should match configuration' {
-            (Get-VMNetworkAdapter -ManagementOS -Name $configurationData.AllNodes.ClusterAdapterName).BandwidthSetting.MinimumBandwidthWeight | Should Be $ConfigurationData.AllNodes.ClusterMinimumBandwidthWeight
-        }
-
-        It 'Live Migration Bandwidth weight should match configuration' {
-            (Get-VMNetworkAdapter -ManagementOS -Name $configurationData.AllNodes.LiveMigrationAdapterName).BandwidthSetting.MinimumBandwidthWeight | Should Be $ConfigurationData.AllNodes.LiveMigrationMinimumBandwidthWeight
-        }
+        }        
     }
 
     Context 'General networking tests' {
-        It 'DNS name of user DNS domain should resolve' {
-            Resolve-DnsName -Name $env:USERDNSDOMAIN -DnsOnly | Should Not BeNullOrEmpty
+        It 'DNS server should be reachable' {
+            Test-Connection -ComputerName $configurationData.AllNodes.ManagementDns -Count 2 -Quiet | Should Be $true
         }
 
         It 'Default Gateway on the management network should be reachable' {
             Test-Connection -ComputerName $configurationData.AllNodes.ManagementGateway -Count 2 -Quiet | Should Be $true
         }
-    }
+    }    
 
     AfterAll {
         remove-Module Hyper-V

@@ -41,7 +41,7 @@ Describe 'Simple Operations tests for Hyper-V Deployment with Switch Embedded Te
 
         It 'VM switch should be a SET' {
             $vmSwitch.EmbeddedTeamingEnabled | Should be $true
-        }        
+        }
 
         It 'Bandwidth Reservation Mode should be Weight' {
             $vmSwitch.BandwidthReservationMode | Should be 'Weight'
@@ -51,18 +51,18 @@ Describe 'Simple Operations tests for Hyper-V Deployment with Switch Embedded Te
             { Get-VMNetworkAdapter -ManagementOS -Name $configurationData.AllNodes.ManagementAdapterName } | Should Not Throw
         }
 
-        It 'Cluster Network Adapter exists' {
-            { Get-VMNetworkAdapter -ManagementOS -Name $configurationData.AllNodes.ClusterAdapterName } | Should Not Throw
+        It 'SMB1 Network Adapter exists' {
+            { Get-VMNetworkAdapter -ManagementOS -Name $configurationData.AllNodes.SMB1AdapterName } | Should Not Throw
         }
 
-        It 'Live Migration Network Adapter exists' {
-            { Get-VMNetworkAdapter -ManagementOS -Name $configurationData.AllNodes.LiveMigrationAdapterName } | Should Not Throw
+        It 'SMB2 Network Adapter exists' {
+            { Get-VMNetworkAdapter -ManagementOS -Name $configurationData.AllNodes.SMB2AdapterName } | Should Not Throw
         }        
     }
 
     Context 'General networking tests' {
-        It 'DNS name of user DNS domain should resolve' {
-            Resolve-DnsName -Name $env:USERDNSDOMAIN -DnsOnly | Should Not BeNullOrEmpty
+        It 'DNS server should be reachable' {
+            Test-Connection -ComputerName $configurationData.AllNodes.ManagementDns -Count 2 -Quiet | Should Be $true
         }
 
         It 'Default Gateway on the management network should be reachable' {

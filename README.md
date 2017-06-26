@@ -5,9 +5,9 @@
 # Available Composite Resource Modules #
 | Module Name  | Composite Resources |
 | -----------  | ------------------- |
-| [Hyper-VConfigurations](https://www.powershellgallery.com/packages/Hyper-VConfigurations) | [HyperVSwitchEmbeddedTeam](https://github.com/rchaganti/InfraBlueprints/tree/Dev/Hyper-VConfigurations/DSCResources/HyperVSwitchEmbeddedTeam) |
-|  | [HyperVSwitchEmbeddedTeamForS2D](https://github.com/rchaganti/InfraBlueprints/tree/Dev/Hyper-VConfigurations/DSCResources/HyperVSwitchEmbeddedTeamForS2D) |
-|  | [HyperVSwitchNativeTeam](https://github.com/rchaganti/InfraBlueprints/tree/Dev/Hyper-VConfigurations/DSCResources/HyperVSwitchNativeTeam) |
+| [HyperVConfigurations](https://www.powershellgallery.com/packages/HyperVConfigurations) | [HyperVSwitchEmbeddedTeam](https://github.com/rchaganti/InfraBlueprints/tree/Dev/HyperVConfigurations/DSCResources/HyperVSwitchEmbeddedTeam) |
+|  | [HyperVSwitchEmbeddedTeamForS2D](https://github.com/rchaganti/InfraBlueprints/tree/Dev/HyperVConfigurations/DSCResources/HyperVSwitchEmbeddedTeamForS2D) |
+|  | [HyperVSwitchNativeTeam](https://github.com/rchaganti/InfraBlueprints/tree/Dev/HyperVConfigurations/DSCResources/HyperVSwitchNativeTeam) |
 | [SystemConfigurations](https://www.powershellgallery.com/packages/SystemConfigurations) | [SystemDomainJoinWithCustomTimezone](https://github.com/rchaganti/InfraBlueprints/tree/Dev/SystemConfigurations/DSCResources/SystemDomainJoinWithCustomTimezone) |
 
 You can contribute to this repository by adding your own composite resource modules. If you have something to share, just submit a pull request and we will review the resources and update the repository with your resource modules.
@@ -21,7 +21,7 @@ Infrastructure Blueprints are essentially composite resource packages that conta
 This repository contains multiple composite configuration modules. Each module contains multiple composite resources with ready to use examples and tests that validate the configuration.
  
 The following folder structure shows how these composite modules are packaged.
-![](http://i.imgur.com/4QZnVg5.png)
+![](http://i.imgur.com/Qt6lokc.png)
 
 - *Diagnostics* folder contains the Simple and Comprehensive tests for performing operations validation.
 	- **Simple**: A set of tests that validate the functionality of infrastructure at the desired state.

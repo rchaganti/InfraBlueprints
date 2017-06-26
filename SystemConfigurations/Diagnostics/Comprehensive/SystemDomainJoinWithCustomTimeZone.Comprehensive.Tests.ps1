@@ -18,7 +18,7 @@ $configurationDataPSD1 = "${examplePath}\Sample_${baseName}.NodeData.psd1"
 
 $configurationData = Get-ConfigurationDataAsObject -ConfigurationData $configurationDataPSD1
 
-Describe 'Simple Operations tests for system configuration' {
+Describe 'Comprehensive Operations tests for system configuration' {
     Context 'Computer host name validation' {
         It 'host name matches configuration data' {
             (Get-CimInstance -ClassName Win32_ComputerSystem).DNSHostName | Should Be $configurationData.AllNodes.ComputerName
@@ -32,6 +32,10 @@ Describe 'Simple Operations tests for system configuration' {
 
         It 'Domain name matches the configuration data' {
             (Get-CimInstance -ClassName Win32_ComputerSystem).Domain | Should Be $configurationData.AllNodes.DomainName
+        }
+
+        It 'Domain name resolution is working' {
+            Resolve-DnsName -Name $env:USERDNSDOMAIN -DnsOnly | Should Not BeNullOrEmpty
         }
     }
 

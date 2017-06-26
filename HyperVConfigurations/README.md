@@ -6,7 +6,7 @@ For example, Hyper-V host network configurations, Hyper-V Host Settings, and so 
 # Available Composite Resource Modules #
 | Module Name  | Composite Resources |
 | -----------  | ------------------- |
-| [Hyper-VConfigurations](https://www.powershellgallery.com/packages/Hyper-VConfigurations) | HyperVSwitchEmbeddedTeam |
+| [HyperVConfigurations](https://www.powershellgallery.com/packages/HyperVConfigurations) | HyperVSwitchEmbeddedTeam |
 |  | HyperVSwitchEmbeddedTeamForS2D |
 |  | HyperVSwitchNativeTeam |
 
