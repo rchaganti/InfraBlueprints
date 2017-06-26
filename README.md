@@ -8,6 +8,7 @@
 | [Hyper-VConfigurations](https://www.powershellgallery.com/packages/Hyper-VConfigurations) | [HyperVSwitchEmbeddedTeam](https://github.com/rchaganti/InfraBlueprints/tree/Dev/Hyper-VConfigurations/DSCResources/HyperVSwitchEmbeddedTeam) |
 |  | [HyperVSwitchEmbeddedTeamForS2D](https://github.com/rchaganti/InfraBlueprints/tree/Dev/Hyper-VConfigurations/DSCResources/HyperVSwitchEmbeddedTeamForS2D) |
 |  | [HyperVSwitchNativeTeam](https://github.com/rchaganti/InfraBlueprints/tree/Dev/Hyper-VConfigurations/DSCResources/HyperVSwitchNativeTeam) |
+| [SystemConfigurations](https://www.powershellgallery.com/packages/SystemConfigurations) | [SystemDomainJoinWithCustomTimezone](https://github.com/rchaganti/InfraBlueprints/tree/Dev/SystemConfigurations/DSCResources/SystemDomainJoinWithCustomTimezone) |
 
 You can contribute to this repository by adding your own composite resource modules. If you have something to share, just submit a pull request and we will review the resources and update the repository with your resource modules.
 
@@ -25,6 +26,7 @@ The following folder structure shows how these composite modules are packaged.
 - *Diagnostics* folder contains the Simple and Comprehensive tests for performing operations validation.
 	- **Simple**: A set of tests that validate the functionality of infrastructure at the desired state.
 	- **Comprehensive**: A set of tests that perform a comprehensive operations validation of the infrastructure at the desired state. Comprehensive 
-	- For ease of identification, the test script names include *Simple* or *Comprehensive* within the file name.
+	- **PreDeploy**: A set of tests that perform pre-deployment validation for the infrastructure that needs to be configured. These tests ensure that the infrastrucutre is ready for the deployment configuration.
+	- For ease of identification, the test script names include *Simple* or *Comprehensive* or *PreDeploy* within the file name.	
 
 The Operations Validation Framework can be used to retrieve the list of tests in this module and invoke the relevant ones.

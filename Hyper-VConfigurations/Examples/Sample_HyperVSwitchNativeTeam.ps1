@@ -30,3 +30,5 @@
         }
     }
 }
+
+HyperVConverged -ConfigurationData .\Sample_HyperVSwitchNativeTeam.NodeData.psd1
