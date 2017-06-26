@@ -5,9 +5,9 @@
 # Available Composite Resource Modules #
 | Module Name  | Composite Resources |
 | -----------  | ------------------- |
-| [Hyper-VConfigurations](https://www.powershellgallery.com/packages/Hyper-VConfigurations) | [HyperVSwitchEmbeddedTeam](https://github.com/rchaganti/InfraBlueprints/tree/Dev/Hyper-VConfigurations/DSCResources/HyperVSwitchEmbeddedTeam) |
-|  | [HyperVSwitchEmbeddedTeamForS2D](https://github.com/rchaganti/InfraBlueprints/tree/Dev/Hyper-VConfigurations/DSCResources/HyperVSwitchEmbeddedTeamForS2D) |
-|  | [HyperVSwitchNativeTeam](https://github.com/rchaganti/InfraBlueprints/tree/Dev/Hyper-VConfigurations/DSCResources/HyperVSwitchNativeTeam) |
+| [HyperVConfigurations](https://www.powershellgallery.com/packages/HyperVConfigurations) | [HyperVSwitchEmbeddedTeam](https://github.com/rchaganti/InfraBlueprints/tree/Dev/HyperVConfigurations/DSCResources/HyperVSwitchEmbeddedTeam) |
+|  | [HyperVSwitchEmbeddedTeamForS2D](https://github.com/rchaganti/InfraBlueprints/tree/Dev/HyperVConfigurations/DSCResources/HyperVSwitchEmbeddedTeamForS2D) |
+|  | [HyperVSwitchNativeTeam](https://github.com/rchaganti/InfraBlueprints/tree/Dev/HyperVConfigurations/DSCResources/HyperVSwitchNativeTeam) |
 | [SystemConfigurations](https://www.powershellgallery.com/packages/SystemConfigurations) | [SystemDomainJoinWithCustomTimezone](https://github.com/rchaganti/InfraBlueprints/tree/Dev/SystemConfigurations/DSCResources/SystemDomainJoinWithCustomTimezone) |
 
 You can contribute to this repository by adding your own composite resource modules. If you have something to share, just submit a pull request and we will review the resources and update the repository with your resource modules.

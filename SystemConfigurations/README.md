@@ -1,4 +1,4 @@
-# Hyper-V Configurations #
+# System Configurations #
 This System Configurations module contains composite resource configurations for most common computer system configurations. 
 
 # Available Composite Resource Modules #
