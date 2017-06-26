@@ -61,8 +61,8 @@ Describe 'Simple Operations tests for Hyper-V Deployment with Switch Embedded Te
     }
 
     Context 'General networking tests' {
-        It 'DNS name of user DNS domain should resolve' {
-            Resolve-DnsName -Name $env:USERDNSDOMAIN -DnsOnly | Should Not BeNullOrEmpty
+        It 'DNS server should be reachable' {
+            Test-Connection -ComputerName $configurationData.AllNodes.ManagementDns -Count 2 -Quiet | Should Be $true
         }
 
         It 'Default Gateway on the management network should be reachable' {
