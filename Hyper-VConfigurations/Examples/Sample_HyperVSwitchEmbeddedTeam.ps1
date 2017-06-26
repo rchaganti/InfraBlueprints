@@ -26,3 +26,5 @@
         }
     }
 }
+
+HyperVSetConverged -ConfigurationData .\Sample_HyperVSwitchEmbeddedTeam.NodeData.psd1

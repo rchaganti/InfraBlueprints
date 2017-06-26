@@ -26,3 +26,5 @@
         }
     }
 }
+
+HyperVSetS2D -ConfigurationData .\Sample_HyperVSwitchEmbeddedTeamForS2D.NodeData.psd1
